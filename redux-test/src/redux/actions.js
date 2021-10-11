@@ -1,4 +1,4 @@
-import { INCREMENT, DECREMENT, INPUT_TEXT, COMMENT_CREATE, COMMENT_UPDATE, COMMENT_DELETE } from "./types";
+import { INCREMENT, DECREMENT, INPUT_TEXT, COMMENT_CREATE, COMMENT_UPDATE, COMMENT_DELETE, COMMENTS_LOAD } from "./types";
 
 export function incrementLikes() {
   return {
@@ -37,5 +37,17 @@ export function commentDelete(id) {
   return {
     type: COMMENT_DELETE,
     id
+  }
+}
+
+export function commentsLoad() {
+  return async dispatch => {
+    const responce = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=10')
+    const jsonData = await responce.json()
+
+    dispatch({
+      type: COMMENTS_LOAD,
+      data: jsonData
+    })
   }
 }
